@@ -141,7 +141,7 @@ func InsertarProceso(estado string, pid string, name string, user string, ram st
 		log.Fatal(err)
 	}
 
-	url := "http://192.168.32.2:4000/insertar_proceso" // Reemplaza con la URL correcta
+	url := "http://35.245.67.156:4000/insertar_proceso" // Reemplaza con la URL correcta
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)
@@ -167,7 +167,7 @@ func InsertarTree(pidPadre string, pidHijo string, name string) {
 		log.Fatal(err)
 	}
 
-	url := "http://192.168.32.2:4000/insertar_hijo" // Reemplaza con la URL correcta
+	url := "http://35.245.67.156:4000/insertar_hijo" // Reemplaza con la URL correcta
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)
@@ -192,7 +192,7 @@ func InsertarUsos(ram string, cpu string) {
 		log.Fatal(err)
 	}
 
-	url := "http://192.168.32.2:4000/insertar_uso" // Reemplaza con la URL correcta
+	url := "http://35.245.67.156:4000/insertar_uso" // Reemplaza con la URL correcta
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)
@@ -220,7 +220,7 @@ func InsertarTasks(running string, sleeping string, zombie string, stopped strin
 		log.Fatal(err)
 	}
 
-	url := "http://192.168.32.2:4000/insertar_tarea" // Reemplaza con la URL correcta
+	url := "http://35.245.67.156:4000/insertar_tarea" // Reemplaza con la URL correcta
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)

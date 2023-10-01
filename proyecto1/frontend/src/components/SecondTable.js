@@ -33,7 +33,7 @@ class SecondTable extends React.Component {
     }
 
     update() {
-        fetch('http://localhost:4000/proceso', {
+        fetch('http://35.245.67.156:4000/proceso', {
             method: 'GET',
             mode: 'cors',
         })
