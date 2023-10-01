@@ -56,14 +56,14 @@ static const struct file_operations operaciones = {
 
 static int inicio(void)
 {
-    proc_create("info_memoria_modificado", 0, NULL, &operaciones);
+    proc_create("ram_201700945", 0, NULL, &operaciones);
     printk(KERN_INFO "Bryan paez\n");
     return 0;
 }
 
 static void __exit finalizar(void)
 {
-    remove_proc_entry("info_memoria_modificado", NULL);
+    remove_proc_entry("ram_201700945", NULL);
     printk(KERN_INFO "Segundo Semestre 2023\n");
 }
 

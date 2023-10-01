@@ -5,3 +5,9 @@ services:
     container_name: maquina1
     restart: always
     build: ../modules
+    networks:
+      - default1   
+      
+networks:
+  default1: 
+    driver: bridge

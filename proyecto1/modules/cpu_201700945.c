@@ -134,7 +134,7 @@ static const struct file_operations operaciones = {
 
 static int inicio(void)
 {
-    proc_create("cpu_modificado", 0, NULL, &operaciones);
+    proc_create("cpu_201700945", 0, NULL, &operaciones);
     printk(KERN_INFO "Bryan Paez\n");
 
     return 0;
@@ -142,7 +142,7 @@ static int inicio(void)
 
 static void __exit finalizar(void)
 {
-    remove_proc_entry("cpu_modificado", NULL);
+    remove_proc_entry("cpu_201700945", NULL);
     printk(KERN_INFO "Segundo Semestre 2023\n");
 }
 
