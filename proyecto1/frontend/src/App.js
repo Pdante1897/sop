@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch('http://10.150.0.2:4000/uso')
+      fetch('http://35.245.67.156:4000/uso')
         .then(response => response.json())
         .then(data => {
           const ramValue = parseFloat(data[data.length - 1].ram);
