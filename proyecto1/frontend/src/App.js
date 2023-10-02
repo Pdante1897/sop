@@ -25,7 +25,7 @@ function App() {
           setCpu(cpuValue);
         })
         .catch(error => console.log(error));
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
   const opcionesMaquinas = [
@@ -42,27 +42,17 @@ function App() {
     setMaquinaSeleccionada(event.target.value);
   };
   
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      pidValue: '',
-    };
-  }
-
+  
   handleKillClick = () => {
-    const { pidValue } = this.state;
 
     // Almacenar el valor de PID en el Local Storage
     localStorage.setItem('kill', 'true');
-    localStorage.setItem('pid', pidValue);
 
     // Limpiar el valor del input
-    this.setState({ pidValue: '' });
   }
 
   handleInputChange = (e) => {
-    this.setState({ pidValue: e.target.value });
+    localStorage.setItem('pid', e.target.value );
   }
 
 
