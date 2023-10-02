@@ -1,5 +1,5 @@
 import React from 'react';
-
+import App from '../App';
 class Row extends React.Component {
     render() {
         const { proceso } = this.props;
@@ -33,7 +33,9 @@ class SecondTable extends React.Component {
     }
 
     update() {
-        fetch('http://35.245.67.156:4000/proceso', {
+        let maquina= App.maquina;
+
+        fetch('http://35.245.67.156:4000/proceso/${maquina}', {
             method: 'GET',
             mode: 'cors',
         })

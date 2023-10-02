@@ -50,8 +50,9 @@ app.get('/uso', (req, res) => {
   });
 });
 
-app.get('/tarea', (req, res) => {
-  connection.query('SELECT * FROM tarea', (error, results) => {
+app.get('/tarea/:maquina', (req, res) => {
+  const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
+  connection.query('SELECT * FROM tarea WHERE maquina = ?', [maquina], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
@@ -60,6 +61,7 @@ app.get('/tarea', (req, res) => {
     }
   });
 });
+
 
 app.get('/hijo', (req, res) => {
   connection.query('SELECT * FROM hijo', (error, results) => {

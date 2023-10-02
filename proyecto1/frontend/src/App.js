@@ -46,16 +46,16 @@ function App() {
     <div className="container">
       <h1 className='titulo-h1'>Proyecto 1 Sopes 1</h1>
       <div>
-  <h1>Selecciona una Máquina</h1>
-  <select value={maquinaSeleccionada} onChange={handleSeleccionMaquina}>
-    {opcionesMaquinas.map((maquina) => (
-      <option key={maquina.numero} value={maquina.numero}>
-        {maquina.nombre}
-      </option>
-    ))}
-  </select>
-  <p>Has seleccionado: Maquina {maquinaSeleccionada}</p>
-</div>
+        <h1>Selecciona una Máquina</h1>
+        <select value={maquinaSeleccionada} onChange={handleSeleccionMaquina}>
+          {opcionesMaquinas.map((maquina) => (
+            <option key={maquina.numero} value={maquina.numero}>
+              {maquina.nombre}
+            </option>
+          ))}
+        </select>
+        <p>Has seleccionado: Maquina {maquinaSeleccionada}</p>
+      </div>
 
       
       <div className='container-table-1'>

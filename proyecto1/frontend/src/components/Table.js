@@ -1,5 +1,5 @@
 import React from 'react';
-
+import App from '../App';
 class Row extends React.Component {
     render() {
         const { proceso } = this.props;
@@ -32,8 +32,9 @@ class Table extends React.Component {
         clearInterval(this.interval);
     }
 
-    update() {
-        fetch('http://35.245.67.156:4000/tarea', {
+    update() {  
+        let maquina= App.maquina;
+        fetch('http://35.245.67.156:4000/tarea/${maquina}', {
             method: 'GET',
             mode: 'cors',
         })
