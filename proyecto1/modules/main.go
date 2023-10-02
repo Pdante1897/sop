@@ -152,7 +152,7 @@ func InsertarProceso(estado string, pid string, name string, user string, ram st
 	if err != nil {
 		log.Fatal(err)
 	}
-	url := fmt.Sprintf("http://35.245.67.156:4000/insertar_proceso/%s/%s", maquina, numero)
+	url := fmt.Sprintf("http://35.245.67.156:4000/insertar_proceso/%s/%s", maquina, strconv.Itoa(numero))
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)

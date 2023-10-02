@@ -27,7 +27,7 @@ app.get('/proceso/:maquina/:procesos', (req, res) => {
   const maquina = req.params.maquina; 
   const procesos = req.params.procesos; // Extrae el valor de la variable "maquina" de la URL
   // Extrae el valor de la variable "maquina" de la URL
-  connection.query("SELECT * FROM proceso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
+  connection.query("select * from proceso where maquina = ? and proces = (select Max(proces) from proceso) order by id ", [maquina], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
