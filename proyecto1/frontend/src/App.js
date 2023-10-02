@@ -10,7 +10,6 @@ import { useState, useEffect } from 'react';
 
 
 function App() {
-  localStorage.setItem('maquinaseleccionada', '1');
   let maquina = localStorage.getItem('maquinaseleccionada');
 
   const [ram, setRam] = useState(0);
