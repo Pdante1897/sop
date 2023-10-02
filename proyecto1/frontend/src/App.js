@@ -46,7 +46,7 @@ function App() {
   const handleKillClick = () => {
 
     // Almacenar el valor de PID en el Local Storage
-    localStorage.setItem('kill', 'true');
+    localStorage.setItem('kill', true);
 
     // Limpiar el valor del input
   }
@@ -70,6 +70,11 @@ function App() {
           <Progress percent={cpu} inverted color='red' progress />
         </Segment>
       </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <br></br>
       
       <div className='container-table-1'>
