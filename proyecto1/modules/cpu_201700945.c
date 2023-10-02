@@ -56,56 +56,19 @@ static int mostrar_info_procesos(struct seq_file *archivo, void *v)
         seq_printf(archivo, "\"usuario\": %d,\n", proceso->cred->uid);
         seq_printf(archivo, "\"estado\":%ld,\n", proceso->__state);
         int porcentaje = (((uso_memoria / (1024 * 1024))) * 100) / (15685);
-        seq_printf(archivo, "\"ram\":%d,\n", porcentaje);
+        seq_printf(archivo, "\"ram\":%d\n", porcentaje);
 
-        seq_printf(archivo, "\"hijos\":[\n");
-        int primer_hijo = 0;
-        list_for_each(lista, &(proceso->children))
+        if (primer_proceso == 0)
         {
-            proceso_hijo = list_entry(lista, struct task_struct, sibling);
-            if (primer_hijo != 0)
-            {
-                seq_printf(archivo, ",{");
-                seq_printf(archivo, "\"pid\":%d,\n", proceso_hijo->pid);
-                seq_printf(archivo, "\"nombre\":\"%s\"\n", proceso_hijo->comm);
-                seq_printf(archivo, "}\n");
-            }
-            else
-            {
-                seq_printf(archivo, "{");
-                seq_printf(archivo, "\"pid\":%d,\n", proceso_hijo->pid);
-                seq_printf(archivo, "\"nombre\":\"%s\"\n", proceso_hijo->comm);
-                seq_printf(archivo, "}\n");
-                primer_hijo = 1;
-            }
+            seq_printf(archivo, "}\n");
+            primer_proceso = 1;
+        }else {
+            seq_printf(archivo, "}\n");
         }
-        primer_hijo = 0;
-        seq_printf(archivo, "\n]");
 
-        if (proceso->__state == 0)
-        {
-            corriendo += 1;
-        }
-        else if (proceso->__state == 1)
-        {
-            durmiendo += 1;
-        }
-        else if (proceso->__state == 4)
-        {
-            zombie += 1;
-        }
-        else
-        {
-            detenido += 1;
-        }
-        seq_printf(archivo, "}\n");
     }
-    seq_printf(archivo, "],\n");
-    seq_printf(archivo, "\"corriendo\":%d,\n", corriendo);
-    seq_printf(archivo, "\"durmiendo\":%d,\n", durmiendo);
-    seq_printf(archivo, "\"zombie\":%d,\n", zombie);
-    seq_printf(archivo, "\"detenido\":%d,\n", detenido);
-    seq_printf(archivo, "\"total\":%d\n", corriendo + durmiendo + zombie + detenido);
+    seq_printf(archivo, "\n]");
+
     seq_printf(archivo, "}\n");
     return 0;
 }

@@ -31,11 +31,14 @@ type Childs struct {
 }
 type Process struct {
 	Pid   int      `json: "pid"`
-	Name  string   `json: "name"`
-	User  int      `json: "user"`
-	State int      `json: "state"`
+	Nombre  string   `json: "nombre"`
+	Usuario  int      `json: "usuario"`
+	Estado int      `json: "estado"`
 	Ram   int      `json: "ram"`
-	Child []Childs `json: "child"`
+}
+
+type Procesos struct {
+    Procesos []Process `json: "procesos"`
 }
 
 
@@ -116,7 +119,7 @@ func getMemory() int  {
     fmt.Println(string(ram))
 	json.Unmarshal(ram, &memoria)
     fmt.Println(memoria)
-	
+
 	return memoria.Memoria_en_uso
 }
 
@@ -136,7 +139,7 @@ func getCpuUsage() float64 {
 	return (total)
 }
 
-func InsertarProceso(estado string, pid string, name string, user string, ram string) {
+func InsertarProceso(estado string, pid string, name string, user string, ram string, maquina string) {
 	data := map[string]string{
 		"estado": estado,
 		"pid":    pid,
@@ -149,8 +152,7 @@ func InsertarProceso(estado string, pid string, name string, user string, ram st
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	url := "http://35.245.67.156:4000/insertar_proceso" // Reemplaza con la URL correcta
+	url := fmt.Sprintf("http://35.245.67.156:4000/insertar_proceso/%s", maquina)
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)
@@ -247,44 +249,36 @@ func LeecProcedimientos(){
     if err != nil {
         log.Fatal(err)
     }
+    fmt.Println(string(Archivo))
 	cpu_info := CPU{}
+    procesos := Procesos{}
+    err = json.Unmarshal(Archivo, &procesos)
+    if err != nil {
+        fmt.Println("Error al parsear el JSON:", err)
+        return
+    }
 	err = json.Unmarshal(Archivo, &cpu_info)
     if err != nil {
         log.Fatal(err)
     }
     rand.Seed(time.Now().UnixNano())
     num1 := strconv.FormatFloat(getCpuUsage(), 'f', 2, 64)
-    memoria := string(getMemory())
+    memoria := strconv.Itoa(getMemory())
+    fmt.Println(memoria)
+    fmt.Println(procesos)
+
 	InsertarUsos("1", memoria, num1)
-	runing := strconv.Itoa(cpu_info.Running)
-	sleeping := strconv.Itoa(cpu_info.Sleeping)
-	zombie  := strconv.Itoa(cpu_info.Zombie)
-	stopped  := strconv.Itoa(cpu_info.Stopped)
-	total  := strconv.Itoa(cpu_info.Total)
-	InsertarTasks("1", runing, sleeping, zombie, stopped, total)
-	for i:= 0; i < len(cpu_info.Processes); i++{
-		Procesos := cpu_info.Processes[i]
-		estado := getState(Procesos.State)
-		pid := strconv.Itoa(Procesos.Pid)
-		name := Procesos.Name 
-		user := getUser(Procesos.User)
-		ram := strconv.Itoa(Procesos.Ram) 
-		if pid == `"`{
-			fmt.Println("Se va alv >:v.")
-		}else{
-			InsertarProceso(estado,pid,name,user,ram)
-		}
-		fmt.Println(Procesos.Child)
-		if len(Procesos.Child) > 0 {
-			for j:= 0; j < len(Procesos.Child); j++{
-				hijos := Procesos.Child[j]
-				pid_hijo := strconv.Itoa(hijos.Pid)
-				nombre := hijos.Name
-				InsertarTree(pid, pid_hijo, nombre)
-			}
-		}else{
-			fmt.Println("El padre no tiene hijos")
-		}
+	
+	//InsertarTasks("1", runing, sleeping, zombie, stopped, total)
+	for i:= 0; i < len(procesos.Procesos); i++{
+		estado := getState(procesos.Procesos[i].Estado)
+		pid := strconv.Itoa(procesos.Procesos[i].Pid)
+		name := procesos.Procesos[i].Nombre 
+		user := getUser(procesos.Procesos[i].Usuario)
+		ram := strconv.Itoa(procesos.Procesos[i].Ram) 
+        InsertarProceso(estado,pid,name,user,ram, "1")
+		
+		
 	}
 }
 var DinamicTree []Tree 

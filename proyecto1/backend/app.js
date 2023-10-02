@@ -83,9 +83,11 @@ app.use(express.json());
 
 // Endpoint para insertar un proceso
 app.post('/insertar_proceso', (req, res) => {
+  const maquina = req.params.maquina;
+
   const { estado, pid, name, user, ram } = req.body;
-  const sql_command = `INSERT INTO proceso(estado, pid, name, user, ram) VALUES(?, ?, ?, ?, ?)`;
-  connection.query(sql_command, [estado, pid, name, user, ram], (error, results) => {
+  const sql_command = `INSERT INTO proceso(estado, pid, name, user, ram, maquina) VALUES(?, ?, ?, ?, ?, ?)`;
+  connection.query(sql_command, [estado, pid, name, user, ram, maquina], (error, results) => {
     if (error) {
       console.error('Error al insertar proceso:', error);
       res.status(500).send('Error al insertar proceso');
