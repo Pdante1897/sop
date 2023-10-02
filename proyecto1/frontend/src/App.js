@@ -24,26 +24,31 @@ function App() {
     }, 50000);
     return () => clearInterval(interval);
   }, []);
-  const Maquinas = [
+  const opcionesMaquinas = [
     { nombre: 'Maquina 1', numero: 1 },
     { nombre: 'Maquina 2', numero: 2 },
     { nombre: 'Maquina 3', numero: 3 },
     { nombre: 'Maquina 4', numero: 4 },
   ];
+
+  const [maquinaSeleccionada, setMaquinaSeleccionada] = useState(1);
+
+  const handleSeleccionMaquina = (event) => {
+    setMaquinaSeleccionada(event.target.value);
+  };
+  
   return (
-    <div className="container">
-      <h1 className='titulo-h1'>Proyecto 1 Sopes 1</h1>
-      <div>
-      <h1>Lista de Máquinas</h1>
-      <ul>
-        {Maquinas.map((maquina, index) => (
-          <li key={index}>
-            {maquina.nombre} - Número: {maquina.numero}
-          </li>
+    <div>
+      <h1>Selecciona una Máquina</h1>
+      <select value={maquinaSeleccionada} onChange={handleSeleccionMaquina}>
+        {opcionesMaquinas.map((maquina) => (
+          <option key={maquina.numero} value={maquina.numero}>
+            {maquina.nombre}
+          </option>
         ))}
-      </ul>
+      </select>
+      <p>Has seleccionado: Maquina {maquinaSeleccionada}</p>
     </div>
-      
       <div className='container-table-1'>
         <Table/>
       </div>
