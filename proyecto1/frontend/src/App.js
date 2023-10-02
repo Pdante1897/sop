@@ -6,10 +6,13 @@ import { update } from 'react-spring';
 import Tree from './components/Tree';
 import { useState, useEffect } from 'react';
 
+
+let maquina = 1;
+
+
 function App() {
   const [ram, setRam] = useState(0);
   const [cpu, setCpu] = useState(0);
-
   useEffect(() => {
     const interval = setInterval(() => {
       fetch('http://35.245.67.156:4000/uso')
