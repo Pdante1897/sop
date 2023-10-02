@@ -115,7 +115,7 @@ app.post('/insertar_uso/:maquina', (req, res) => {
   const maquina = req.params.maquina;
 
   const sql_command = `INSERT INTO uso(ram, cpu, maquina) VALUES(?, ?, ?)`;
-  connection.query(sql_command, [ram, cpu], (error, results) => {
+  connection.query(sql_command, [ram, cpu, maquina], (error, results) => {
     if (error) {
       console.error('Error al insertar uso:', error);
       res.status(500).send('Error al insertar uso');
