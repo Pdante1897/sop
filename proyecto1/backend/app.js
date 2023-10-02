@@ -34,18 +34,14 @@ app.get('/proceso', (req, res) => {
   });
 });
 
-app.get('/uso', (req, res) => {
-  connection.query('SELECT * FROM uso', (error, results) => {
+app.get('/uso/:maquina', (req, res) => {
+  const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
+  connection.query("SELECT * FROM uso WHERE ? = '1' ORDER BY id desc limit  1", [maquina], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
     } else {
       res.send(results);
-      connection.query('TRUNCATE uso;', (error, results) => {
-        if (error) {
-          console.error('Error al realizar la consulta:', error);
-        }
-      });
     }
   });
 });
@@ -114,9 +110,11 @@ app.post('/insertar_hijo', (req, res) => {
 });
 
 // Endpoint para insertar un uso
-app.post('/insertar_uso', (req, res) => {
+app.post('/insertar_uso/:maquina', (req, res) => {
   const { ram, cpu } = req.body;
-  const sql_command = `INSERT INTO uso(ram, cpu) VALUES(?, ?)`;
+  const maquina = req.params.maquina;
+
+  const sql_command = `INSERT INTO uso(ram, cpu, maquina) VALUES(?, ?, ?)`;
   connection.query(sql_command, [ram, cpu], (error, results) => {
     if (error) {
       console.error('Error al insertar uso:', error);

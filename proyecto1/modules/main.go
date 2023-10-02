@@ -190,7 +190,7 @@ func InsertarTree(pidPadre string, pidHijo string, name string) {
 	}
 }
 
-func InsertarUsos(ram string, cpu string) {
+func InsertarUsos(maquina string, ram string, cpu string) {
 	data := map[string]string{
 		"ram": ram,
 		"cpu": cpu,
@@ -200,8 +200,7 @@ func InsertarUsos(ram string, cpu string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	url := "http://35.245.67.156:4000/insertar_uso" // Reemplaza con la URL correcta
+	url := fmt.Sprintf("http://35.245.67.156:4000/insertar_uso/%s", maquina)
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)
@@ -256,7 +255,7 @@ func LeecProcedimientos(){
     rand.Seed(time.Now().UnixNano())
     num1 := strconv.Itoa(rand.Intn(30) + 20)
     memoria := string(getMemory())
-	InsertarUsos(memoria, num1)
+	InsertarUsos("1", memoria, num1)
 	runing := strconv.Itoa(cpu_info.Running)
 	sleeping := strconv.Itoa(cpu_info.Sleeping)
 	zombie  := strconv.Itoa(cpu_info.Zombie)
