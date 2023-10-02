@@ -43,7 +43,7 @@ function App() {
   };
   
   
-  handleKillClick = () => {
+  const handleKillClick = () => {
 
     // Almacenar el valor de PID en el Local Storage
     localStorage.setItem('kill', 'true');
@@ -51,7 +51,7 @@ function App() {
     // Limpiar el valor del input
   }
 
-  handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     localStorage.setItem('pid', e.target.value );
   }
 
@@ -90,10 +90,9 @@ function App() {
           <input
             type="text"
             id="pidInput"
-            value={this.state.pidValue}
-            onChange={this.handleInputChange}
+            onChange={handleInputChange}
           />
-          <button onClick={this.handleKillClick}>Kill</button>
+          <button onClick={handleKillClick}>Kill</button>
         </div>
       </div>
       <div className='container-table-2'>
