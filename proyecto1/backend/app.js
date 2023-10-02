@@ -86,7 +86,7 @@ app.use(express.json());
 app.post('/insertar_proceso/:maquina/:proces', (req, res) => {
   const maquina = req.params.maquina;
   const proces = req.params.proces;
-
+  console.log(req.body);
   const { estado, pid, name, user, ram } = req.body;
   const sql_command = `INSERT INTO proceso(estado, pid, name, user, ram, maquina, proces) VALUES(?, ?, ?, ?, ?, ?, ?)`;
   connection.query(sql_command, [estado, pid, name, user, ram, maquina, proces], (error, results) => {

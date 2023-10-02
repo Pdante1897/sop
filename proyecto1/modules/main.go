@@ -139,14 +139,8 @@ func getCpuUsage() float64 {
 	return (total)
 }
 
-func InsertarProceso(estado string, pid string, name string, user string, ram string, maquina string, numero int) {
-	data := map[string]string{
-		"estado": estado,
-		"pid":    pid,
-		"name":   name,
-		"user":   user,
-		"ram":    ram,
-	}
+func InsertarProceso(listado Procesos, maquina string, numero int) {
+	data := listado
 
 	jsonData, err := json.Marshal(data)
 	if err != nil {
@@ -268,9 +262,11 @@ func LeecProcedimientos(iteracion int){
     fmt.Println(procesos)
 
 	InsertarUsos("1", memoria, num1)
-	
+    InsertarProceso(procesos, "1", iteracion)
+
 	//InsertarTasks("1", runing, sleeping, zombie, stopped, total)
-	for i:= 0; i < len(procesos.Procesos); i++{
+	/*
+    for i:= 0; i < len(procesos.Procesos); i++{
 		estado := getState(procesos.Procesos[i].Estado)
 		pid := strconv.Itoa(procesos.Procesos[i].Pid)
 		name := procesos.Procesos[i].Nombre 
@@ -278,10 +274,9 @@ func LeecProcedimientos(iteracion int){
 		ram := strconv.Itoa(procesos.Procesos[i].Ram)
         fmt.Println(user) 
         fmt.Println(procesos.Procesos[i]) 
-        InsertarProceso(estado,pid,name,user,ram, "1", iteracion)
 		
 		
-	}
+	}*/
 }
 var DinamicTree []Tree 
 var ProcessList []Process
