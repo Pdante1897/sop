@@ -127,10 +127,11 @@ app.post('/insertar_uso', (req, res) => {
 });
 
 // Endpoint para insertar una tarea
-app.post('/insertar_tarea', (req, res) => {
+app.post('/insertar_tarea/:maquina', (req, res) => {
+  const maquina = req.params.maquina;
   const { running, sleeping, zombie, stopped, total } = req.body;
-  const sql_command = `INSERT INTO tarea(running, sleeping, zombie, stopped, total) VALUES(?, ?, ?, ?, ?)`;
-  connection.query(sql_command, [running, sleeping, zombie, stopped, total], (error, results) => {
+  const sql_command = `INSERT INTO tarea(running, sleeping, zombie, stopped, total, maquina) VALUES(?, ?, ?, ?, ?, ?)`;
+  connection.query(sql_command, [running, sleeping, zombie, stopped, total, maquina], (error, results) => {
     if (error) {
       console.error('Error al insertar tarea:', error);
       res.status(500).send('Error al insertar tarea');

@@ -215,7 +215,7 @@ func InsertarUsos(ram string, cpu string) {
 	}
 }
 
-func InsertarTasks(running string, sleeping string, zombie string, stopped string, total string) {
+func InsertarTasks(maquina string, running string, sleeping string, zombie string, stopped string, total string) {
 	data := map[string]string{
 		"running":  running,
 		"sleeping": sleeping,
@@ -229,7 +229,7 @@ func InsertarTasks(running string, sleeping string, zombie string, stopped strin
 		log.Fatal(err)
 	}
 
-	url := "http://35.245.67.156:4000/insertar_tarea" // Reemplaza con la URL correcta
+	url := fmt.Sprintf("http://35.245.67.156:4000/insertar_tarea/%s", maquina)
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)

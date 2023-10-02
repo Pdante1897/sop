@@ -7,7 +7,7 @@ import Tree from './components/Tree';
 import { useState, useEffect } from 'react';
 
 
-let maquina = 1;
+let maquina = '1';
 
 
 function App() {
@@ -28,10 +28,10 @@ function App() {
     return () => clearInterval(interval);
   }, []);
   const opcionesMaquinas = [
-    { nombre: 'Maquina 1', numero: 1 },
-    { nombre: 'Maquina 2', numero: 2 },
-    { nombre: 'Maquina 3', numero: 3 },
-    { nombre: 'Maquina 4', numero: 4 },
+    { nombre: 'Maquina 1', numero: '1' },
+    { nombre: 'Maquina 2', numero: '2' },
+    { nombre: 'Maquina 3', numero: '3' },
+    { nombre: 'Maquina 4', numero: '4' },
   ];
 
   const [maquinaSeleccionada, setMaquinaSeleccionada] = useState(1);
