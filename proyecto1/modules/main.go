@@ -262,7 +262,7 @@ func LeecProcedimientos(){
 	zombie  := strconv.Itoa(cpu_info.Zombie)
 	stopped  := strconv.Itoa(cpu_info.Stopped)
 	total  := strconv.Itoa(cpu_info.Total)
-	InsertarTasks(runing, sleeping, zombie, stopped, total)
+	InsertarTasks("1", runing, sleeping, zombie, stopped, total)
 	for i:= 0; i < len(cpu_info.Processes); i++{
 		Procesos := cpu_info.Processes[i]
 		estado := getState(Procesos.State)
