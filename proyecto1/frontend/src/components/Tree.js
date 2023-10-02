@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { maquinaSeleccionada } from '../App';
+import { maquinaSeleccionada } from '../App'; // Ajusta la ruta según la ubicación de App.js desde tu archivo de componentes.
+
+// Ahora puedes usar maquinaSeleccionada en tu componente.
 
 function Tree() {
   const [parentData, setParentData] = useState([]);

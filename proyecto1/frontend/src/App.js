@@ -88,5 +88,5 @@ function App() {
   );
 }
 
-export { App, maquinaSeleccionada }; // Exporta App y maquinaSeleccionada de forma individual
+export default { App, maquinaSeleccionada };
 // variables.js

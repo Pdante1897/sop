@@ -1,5 +1,7 @@
 import React from 'react';
-import { maquinaSeleccionada } from '../App';
+import { maquinaSeleccionada } from '../App'; // Ajusta la ruta según la ubicación de App.js desde tu archivo de componentes.
+
+// Ahora puedes usar maquinaSeleccionada en tu componente.
 class Row extends React.Component {
     render() {
         const { proceso } = this.props;
