@@ -34,6 +34,7 @@ class Table extends React.Component {
 
     update() {  
         let maquina= App.maquina;
+        console.log(maquina);
         fetch('http://35.245.67.156:4000/tarea/${maquina}', {
             method: 'GET',
             mode: 'cors',
