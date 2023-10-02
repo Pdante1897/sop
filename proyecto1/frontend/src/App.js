@@ -24,10 +24,26 @@ function App() {
     }, 50000);
     return () => clearInterval(interval);
   }, []);
-
+  const Maquinas = [
+    { nombre: 'Maquina 1', numero: 1 },
+    { nombre: 'Maquina 2', numero: 2 },
+    { nombre: 'Maquina 3', numero: 3 },
+    { nombre: 'Maquina 4', numero: 4 },
+  ];
   return (
     <div className="container">
       <h1 className='titulo-h1'>Proyecto 1 Sopes 1</h1>
+      <div>
+      <h1>Lista de Máquinas</h1>
+      <ul>
+        {Maquinas.map((maquina, index) => (
+          <li key={index}>
+            {maquina.nombre} - Número: {maquina.numero}
+          </li>
+        ))}
+      </ul>
+    </div>
+      
       <div className='container-table-1'>
         <Table/>
       </div>

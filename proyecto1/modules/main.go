@@ -19,13 +19,11 @@ type Tree struct {
 }
 
 type Memoria struct {
-	Total_memory     int     `json: "total_memory"`
-	Free_memory      int     `json: "free_memory"`
-	Used_memory      int     `json: "used_memory"`
-	Cache_memory     float64 `json: "cache_memory"`
-	Available_memory int     `json: "available_memory"`
-	MB_memory        int     `json: "mb_memory"`
-}
+    Memoria_total int `json:"memoria_total"`
+    Memoria_libre int `json:"memoria_libre"`
+	Memoria_en_uso      int     `json: "memoria_en_uso"`
+  }
+  
 
 type Childs struct {
 	Pid  int    `json: "pid"`
@@ -48,17 +46,29 @@ type CPU struct {
 	Zombie    int       `json: "zombie"`
 	Stopped   int       `json: "stopped"`
 	Total     int       `json: "total"`
+    Usage     float64   `json: "usage"`
 }
 
-type CPU_SENDING struct {
-	Running   int       `json: "running"`
-	Sleeping  int       `json: "sleeping"`
-	Zombie    int       `json: "zombie"`
-	Stopped   int       `json: "stopped"`
-	Total     int       `json: "total"`
+type CpuSend struct {
+	Processes []ProcessSend `json: "processes"`
+	Running   int           `json: "running"`
+	Sleeping  int           `json: "sleeping"`
+	Zombie    int           `json: "zombie"`
+	Stopped   int           `json: "stopped"`
+	Total     int           `json: "total"`
+	Usage     float64       `json: "usage"`
 }
 type RAM struct {
-	Used int `json: "used_memory"`
+	Used int `json: "memoria_en_uso"`
+}
+
+type ProcessSend struct {
+	Pid   int      `json: "pid"`
+	Name  string   `json: "name"`
+	User  string   `json: "user"`
+	State string   `json: "state"`
+	Ram   int      `json: "ram"`
+	Child []Childs `json: "child"`
 }
 
 func getUser(nombre int) string {
@@ -103,12 +113,11 @@ func getCache() float64 {
 func getMemory() int  {
 	ram, _ := ioutil.ReadFile("/proc/ram_201700945")
 	var memoria Memoria
+    fmt.Println(string(ram))
 	json.Unmarshal(ram, &memoria)
-	memoria.Cache_memory = getCache()
-	memoria.Used_memory = (memoria.Total_memory - memoria.Free_memory - int(getCache())) * 100 / memoria.Total_memory
-	memoria.Available_memory = memoria.Free_memory + int(getCache())
-	memoria.MB_memory = (memoria.Total_memory - memoria.Free_memory - int(getCache()))
-	return memoria.Used_memory
+    fmt.Println(memoria)
+	
+	return memoria.Memoria_en_uso
 }
 
 func getCpuUsage() float64 {
@@ -235,7 +244,7 @@ func InsertarTasks(running string, sleeping string, zombie string, stopped strin
 }
 
 func LeecProcedimientos(){
-	Archivo, err := ioutil.ReadFile("/proc/cpu_201700945")
+    Archivo, err := ioutil.ReadFile("/proc/cpu_201700945")
     if err != nil {
         log.Fatal(err)
     }
@@ -246,8 +255,8 @@ func LeecProcedimientos(){
     }
     rand.Seed(time.Now().UnixNano())
     num1 := strconv.Itoa(rand.Intn(30) + 20)
-    num2 := strconv.Itoa(rand.Intn(30) + 20)
-	InsertarUsos(num1, num2)
+    memoria := string(getMemory())
+	InsertarUsos(memoria, num1)
 	runing := strconv.Itoa(cpu_info.Running)
 	sleeping := strconv.Itoa(cpu_info.Sleeping)
 	zombie  := strconv.Itoa(cpu_info.Zombie)
@@ -262,7 +271,7 @@ func LeecProcedimientos(){
 		user := getUser(Procesos.User)
 		ram := strconv.Itoa(Procesos.Ram) 
 		if pid == `"`{
-			fmt.Println("Se borra.")
+			fmt.Println("Se va alv >:v.")
 		}else{
 			InsertarProceso(estado,pid,name,user,ram)
 		}
@@ -281,6 +290,33 @@ func LeecProcedimientos(){
 }
 var DinamicTree []Tree 
 var ProcessList []Process
+
+func contains(s []int, e int) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
+func killProcess(response http.ResponseWriter, request *http.Request) {
+	data, errRead := ioutil.ReadAll(request.Body)
+	fmt.Println("kill process")
+	if errRead != nil {
+		fmt.Println("error al eliminar un proceso")
+		response.Write([]byte("{\"value\": false"))
+	}
+	fmt.Println(string(data))
+	cmd := exec.Command("sh", "-c", `kill `+string(data))
+	stdout, err := cmd.Output()
+	if err != nil {
+		fmt.Println("error al correr comando", err)
+	}
+	salida := strings.Trim(strings.Trim(string(stdout), " "), "\n")
+	fmt.Println(salida)
+	response.Write([]byte("{\"value\": true"))
+}
 
 func main() {
 	
