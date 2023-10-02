@@ -23,7 +23,8 @@ connection.connect((error) => {
 
 
 
-app.get('/proceso', (req, res) => {
+app.get('/proceso/:maquina', (req, res) => {
+  const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
   connection.query('SELECT * FROM proceso', (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
@@ -61,7 +62,8 @@ app.get('/tarea/:maquina', (req, res) => {
 });
 
 
-app.get('/hijo', (req, res) => {
+app.get('/hijo/:maquina', (req, res) => {
+  const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
   connection.query('SELECT * FROM hijo', (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);

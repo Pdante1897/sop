@@ -253,7 +253,7 @@ func LeecProcedimientos(){
         log.Fatal(err)
     }
     rand.Seed(time.Now().UnixNano())
-    num1 := strconv.Itoa(rand.Intn(30) + 20)
+    num1 := strconv.FormatFloat(getCpuUsage(), 'f', 2, 64)
     memoria := string(getMemory())
 	InsertarUsos("1", memoria, num1)
 	runing := strconv.Itoa(cpu_info.Running)
