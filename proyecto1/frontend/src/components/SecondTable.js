@@ -1,5 +1,5 @@
 import React from 'react';
-import { maquinaSeleccionada } from './App';
+import { maquinaSeleccionada } from '../App';
 class Row extends React.Component {
     render() {
         const { proceso } = this.props;

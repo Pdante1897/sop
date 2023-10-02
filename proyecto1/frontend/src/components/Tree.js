@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { maquinaSeleccionada } from './App';
+import { maquinaSeleccionada } from '../App';
 
 function Tree() {
   const [parentData, setParentData] = useState([]);
