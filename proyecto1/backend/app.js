@@ -25,7 +25,7 @@ connection.connect((error) => {
 
 app.get('/proceso/:maquina', (req, res) => {
   const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
-  connection.query('SELECT * FROM proceso', (error, results) => {
+  connection.query("SELECT * FROM proceso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
@@ -37,19 +37,28 @@ app.get('/proceso/:maquina', (req, res) => {
 
 app.get('/uso/:maquina', (req, res) => {
   const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
-  connection.query("SELECT * FROM uso WHERE ? = '1' ORDER BY id desc limit  1", [maquina], (error, results) => {
+  connection.query("SELECT * FROM uso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
     } else {
+      connection.query("DELETE FROM uso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
+        if (error) {
+          console.error('Error al realizar la consulta:', error);
+          res.status(500).send('Error al realizar la consulta');
+        } else {
+          res.send(results);
+        }
+      });
       res.send(results);
+
     }
   });
 });
 
 app.get('/tarea/:maquina', (req, res) => {
   const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
-  connection.query("SELECT * FROM tarea WHERE ? = '1' ORDER BY id desc limit  1", [maquina], (error, results) => {
+  connection.query("SELECT * FROM tarea WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
