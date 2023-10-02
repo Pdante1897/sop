@@ -10,13 +10,14 @@ import { useState, useEffect } from 'react';
 
 
 function App() {
-  let maquina = '1';
+  localStorage.setItem('maquinaseleccionada', '1');
+  let maquina = localStorage.getItem('maquinaseleccionada');
 
   const [ram, setRam] = useState(0);
   const [cpu, setCpu] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch('http://35.245.67.156:4000/uso')
+      fetch(`http://35.245.67.156:4000/uso/${maquina}`)
         .then(response => response.json())
         .then(data => {
           const ramValue = parseFloat(data[data.length - 1].ram);
@@ -38,7 +39,7 @@ function App() {
   const [maquinaSeleccionada, setMaquinaSeleccionada] = useState(1);
 
   const handleSeleccionMaquina = (event) => {
-    localStorage.setItem('maquinaseleccionada', maquinaSeleccionada);
+    localStorage.setItem('maquinaseleccionada', event.target.value);
     setMaquinaSeleccionada(event.target.value);
   };
   
