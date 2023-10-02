@@ -40,7 +40,9 @@ type Process struct {
 type Procesos struct {
     Procesos []Process `json: "procesos"`
 }
-
+type ProcesosSend struct {
+    Procesos []ProcessSend `json: "procesos"`
+}
 
 type CPU struct {
 	Processes []Process `json: "processes"`
@@ -66,12 +68,11 @@ type RAM struct {
 }
 
 type ProcessSend struct {
-	Pid   int      `json: "pid"`
-	Name  string   `json: "name"`
-	User  string   `json: "user"`
-	State string   `json: "state"`
-	Ram   int      `json: "ram"`
-	Child []Childs `json: "child"`
+	Pid   string      `json: "pid"`
+	Nombre  string   `json: "nombre"`
+	Usuario  string      `json: "usuario"`
+	Estado string      `json: "estado"`
+	Ram   string      `json: "ram"`
 }
 
 func getUser(nombre int) string {
@@ -140,8 +141,21 @@ func getCpuUsage() float64 {
 }
 
 func InsertarProceso(listado Procesos, maquina string, numero int) {
-	data := listado
-
+	//convertir listado de Procesos a listado de ProcessSend
+    var listadoSend []ProcessSend
+    for i:= 0; i < len(listado.Procesos); i++{
+        estado := getState(listado.Procesos[i].Estado)
+		pid := strconv.Itoa(listado.Procesos[i].Pid)
+		name := listado.Procesos[i].Nombre 
+		user := getUser(listado.Procesos[i].Usuario)
+		ram := strconv.Itoa(listado.Procesos[i].Ram)
+        listadoSend = append(listadoSend, ProcessSend{Pid: pid, Nombre: name, Usuario: user, Estado: estado, Ram: ram})
+        fmt.Println(user)
+        fmt.Println(listadoSend[i])
+    }
+    procesosSend := ProcesosSend{Procesos: listadoSend}
+    data := procesosSend
+    
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		log.Fatal(err)
