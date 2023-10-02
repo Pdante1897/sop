@@ -57,9 +57,17 @@ app.get('/tarea/:maquina', (req, res) => {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
     } else {
+      connection.query('SELECT * FROM tarea WHERE maquina = ?', [maquina], (error, results) => {
+        if (error) {
+          console.error('Error al realizar la consulta:', error);
+          //res.status(500).send('Error al realizar la consulta');
+        }
+      });
       res.send(results);
+      
     }
   });
+  
 });
 
 
