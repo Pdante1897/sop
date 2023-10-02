@@ -42,13 +42,45 @@ function App() {
     setMaquinaSeleccionada(event.target.value);
   };
   
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pidValue: '',
+    };
+  }
+
+  handleKillClick = () => {
+    const { pidValue } = this.state;
+
+    // Almacenar el valor de PID en el Local Storage
+    localStorage.setItem('kill', 'true');
+    localStorage.setItem('pid', pidValue);
+
+    // Limpiar el valor del input
+    this.setState({ pidValue: '' });
+  }
+
+  handleInputChange = (e) => {
+    this.setState({ pidValue: e.target.value });
+  }
+
+
   return (
 
     
     <div className="container">
       <h1 className='titulo-h1'>Proyecto 1 Sopes 1</h1>
       
-
+      <div className='container-graphics'>
+        <Segment inverted>
+        <h1>RAM</h1>
+          <Progress percent={ram} inverted color='green' progress />
+          <h1>CPU</h1>
+          <Progress percent={cpu} inverted color='red' progress />
+        </Segment>
+      </div>
+      <br></br>
       
       <div className='container-table-1'>
         <div>
@@ -62,6 +94,17 @@ function App() {
           </select>
           <p>Has seleccionado: Maquina {maquinaSeleccionada}</p>
         </div>
+        <br></br>
+        <div>
+          <label htmlFor="pidInput">PID:</label>
+          <input
+            type="text"
+            id="pidInput"
+            value={this.state.pidValue}
+            onChange={this.handleInputChange}
+          />
+          <button onClick={this.handleKillClick}>Kill</button>
+        </div>
       </div>
       <div className='container-table-2'>
         <SecondTable/>
@@ -71,19 +114,8 @@ function App() {
       <br></br>
       <br></br>
       <br></br>
-      <div className='container-graphics'>
-        <Segment inverted>
-        <h1>RAM</h1>
-          <Progress percent={ram} inverted color='green' progress />
-          <h1>CPU</h1>
-          <Progress percent={cpu} inverted color='red' progress />
-        </Segment>
-      </div>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <Tree/>
+      
+      
     </div>
   );
 }
