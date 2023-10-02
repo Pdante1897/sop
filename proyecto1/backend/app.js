@@ -23,9 +23,8 @@ connection.connect((error) => {
 
 
 
-app.get('/proceso/:maquina/:procesos', (req, res) => {
+app.get('/proceso/:maquina/', (req, res) => {
   const maquina = req.params.maquina; 
-  const procesos = req.params.procesos; // Extrae el valor de la variable "maquina" de la URL
   // Extrae el valor de la variable "maquina" de la URL
   connection.query("select * from proceso where maquina = ? and proces = (select Max(proces) from proceso) order by id ", [maquina], (error, results) => {
     if (error) {
