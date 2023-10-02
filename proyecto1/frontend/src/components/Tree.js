@@ -8,11 +8,11 @@ function Tree() {
   const [activeItem, setActiveItem] = useState(null);
   let maquina = localStorage.getItem('maquinaseleccionada');
   const fetchData = () => {
-    fetch('http://35.245.67.156:4000/proceso/${maquina}')
+    fetch(`http://35.245.67.156:4000/proceso/${maquina}`)
       .then(response => response.json())
       .then(data => setParentData(data));
 
-    fetch('http://35.245.67.156:4000/hijo/${maquina}')
+    fetch(`http://35.245.67.156:4000/hijo/${maquina}`)
       .then(response => response.json())
       .then(data => setChildData(data));
   };

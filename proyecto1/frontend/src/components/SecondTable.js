@@ -36,7 +36,7 @@ class SecondTable extends React.Component {
     update() {
         let maquina = localStorage.getItem('maquinaseleccionada');
 
-        fetch('http://35.245.67.156:4000/proceso/${maquina}', {
+        fetch(`http://35.245.67.156:4000/proceso/${maquina}`, {
             method: 'GET',
             mode: 'cors',
         })

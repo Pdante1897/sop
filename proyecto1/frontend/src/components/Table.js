@@ -37,7 +37,7 @@ class Table extends React.Component {
         let maquina = localStorage.getItem('maquinaseleccionada');
 
         console.log(maquina);
-        fetch('http://35.245.67.156:4000/tarea/${maquina}', {
+        fetch(`http://35.245.67.156:4000/tarea/${maquina}`, {
             method: 'GET',
             mode: 'cors',
         })

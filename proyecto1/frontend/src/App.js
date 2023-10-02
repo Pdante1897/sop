@@ -38,8 +38,8 @@ function App() {
   const [maquinaSeleccionada, setMaquinaSeleccionada] = useState(1);
 
   const handleSeleccionMaquina = (event) => {
-    setMaquinaSeleccionada(event.target.value);
     localStorage.setItem('maquinaseleccionada', maquinaSeleccionada);
+    setMaquinaSeleccionada(event.target.value);
   };
   
   return (
