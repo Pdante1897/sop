@@ -25,7 +25,7 @@ function App() {
           setCpu(cpuValue);
         })
         .catch(error => console.log(error));
-    }, 50000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
   const opcionesMaquinas = [
