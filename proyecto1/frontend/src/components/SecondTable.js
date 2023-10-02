@@ -26,7 +26,7 @@ class SecondTable extends React.Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(() => this.update(), 7000);
+        this.interval = setInterval(() => this.update(), 1000);
     }
 
     componentWillUnmount() {

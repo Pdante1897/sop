@@ -23,8 +23,10 @@ connection.connect((error) => {
 
 
 
-app.get('/proceso/:maquina', (req, res) => {
-  const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
+app.get('/proceso/:maquina/:procesos', (req, res) => {
+  const maquina = req.params.maquina; 
+  const procesos = req.params.procesos; // Extrae el valor de la variable "maquina" de la URL
+  // Extrae el valor de la variable "maquina" de la URL
   connection.query("SELECT * FROM proceso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
@@ -42,12 +44,6 @@ app.get('/uso/:maquina', (req, res) => {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
     } else {
-      connection.query("DELETE FROM uso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
-        if (error) {
-          console.error('Error al realizar la consulta:', error);
-        } else {
-        }
-      });
       res.send(results);
     }
   });
@@ -88,12 +84,13 @@ app.get('/hijo/:maquina', (req, res) => {
 app.use(express.json());
 
 // Endpoint para insertar un proceso
-app.post('/insertar_proceso/:maquina', (req, res) => {
+app.post('/insertar_proceso/:maquina/:proces', (req, res) => {
   const maquina = req.params.maquina;
+  const proces = req.params.proces;
 
   const { estado, pid, name, user, ram } = req.body;
-  const sql_command = `INSERT INTO proceso(estado, pid, name, user, ram, maquina) VALUES(?, ?, ?, ?, ?, ?)`;
-  connection.query(sql_command, [estado, pid, name, user, ram, maquina], (error, results) => {
+  const sql_command = `INSERT INTO proceso(estado, pid, name, user, ram, maquina, proces) VALUES(?, ?, ?, ?, ?, ?, ?)`;
+  connection.query(sql_command, [estado, pid, name, user, ram, maquina, proces], (error, results) => {
     if (error) {
       console.error('Error al insertar proceso:', error);
       res.status(500).send('Error al insertar proceso');

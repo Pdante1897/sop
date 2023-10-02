@@ -139,7 +139,7 @@ func getCpuUsage() float64 {
 	return (total)
 }
 
-func InsertarProceso(estado string, pid string, name string, user string, ram string, maquina string) {
+func InsertarProceso(estado string, pid string, name string, user string, ram string, maquina string, numero int) {
 	data := map[string]string{
 		"estado": estado,
 		"pid":    pid,
@@ -152,7 +152,7 @@ func InsertarProceso(estado string, pid string, name string, user string, ram st
 	if err != nil {
 		log.Fatal(err)
 	}
-	url := fmt.Sprintf("http://35.245.67.156:4000/insertar_proceso/%s", maquina)
+	url := fmt.Sprintf("http://35.245.67.156:4000/insertar_proceso/%s/%s", maquina, numero)
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		log.Fatal(err)
@@ -244,7 +244,7 @@ func InsertarTasks(maquina string, running string, sleeping string, zombie strin
 	}
 }
 
-func LeecProcedimientos(){
+func LeecProcedimientos(iteracion int){
     Archivo, err := ioutil.ReadFile("/proc/cpu_201700945")
     if err != nil {
         log.Fatal(err)
@@ -278,7 +278,7 @@ func LeecProcedimientos(){
 		ram := strconv.Itoa(procesos.Procesos[i].Ram)
         fmt.Println(user) 
         fmt.Println(procesos.Procesos[i]) 
-        InsertarProceso(estado,pid,name,user,ram, "1")
+        InsertarProceso(estado,pid,name,user,ram, "1", iteracion)
 		
 		
 	}
@@ -316,8 +316,11 @@ func killProcess(response http.ResponseWriter, request *http.Request) {
 func main() {
 	
 	tiempoDormido := (time.Second * time.Duration(5)) / time.Duration(1)
-	for {
-		LeecProcedimientos()
+	i:=0
+    for {
+        
+		LeecProcedimientos(i)
 		time.Sleep(tiempoDormido)
-	}
+        i++
+    }
 }
