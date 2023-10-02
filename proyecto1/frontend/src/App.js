@@ -7,10 +7,11 @@ import Tree from './components/Tree';
 import { useState, useEffect } from 'react';
 
 
-let maquina = '1';
 
 
 function App() {
+  let maquina = '1';
+
   const [ram, setRam] = useState(0);
   const [cpu, setCpu] = useState(0);
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
 
   const handleSeleccionMaquina = (event) => {
     setMaquinaSeleccionada(event.target.value);
+
   };
   
   return (
@@ -86,4 +88,5 @@ function App() {
   );
 }
 
-export default App;
+export default {App, maquinaSeleccionada};
+// variables.js

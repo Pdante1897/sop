@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import App from '../App';
+import { maquinaSeleccionada } from './App';
 
 function Tree() {
   const [parentData, setParentData] = useState([]);
   const [childData, setChildData] = useState([]);
   const [activeItem, setActiveItem] = useState(null);
-  let maquina = App.maquina;
+  let maquina = maquinaSeleccionada;
   const fetchData = () => {
     fetch('http://35.245.67.156:4000/proceso/${maquina}')
       .then(response => response.json())
