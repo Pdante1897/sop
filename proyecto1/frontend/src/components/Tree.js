@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { maquinaSeleccionada } from '../App'; // Ajusta la ruta según la ubicación de App.js desde tu archivo de componentes.
 
 // Ahora puedes usar maquinaSeleccionada en tu componente.
 
@@ -7,7 +6,7 @@ function Tree() {
   const [parentData, setParentData] = useState([]);
   const [childData, setChildData] = useState([]);
   const [activeItem, setActiveItem] = useState(null);
-  let maquina = maquinaSeleccionada;
+  let maquina = localStorage.getItem('maquinaseleccionada');
   const fetchData = () => {
     fetch('http://35.245.67.156:4000/proceso/${maquina}')
       .then(response => response.json())

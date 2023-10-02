@@ -39,7 +39,7 @@ function App() {
 
   const handleSeleccionMaquina = (event) => {
     setMaquinaSeleccionada(event.target.value);
-
+    localStorage.setItem('maquinaseleccionada', maquinaSeleccionada);
   };
   
   return (
@@ -88,5 +88,4 @@ function App() {
   );
 }
 
-export { maquinaSeleccionada }; // Exporta maquinaSeleccionada de forma individual
 export default App;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { maquinaSeleccionada } from '../App'; // Ajusta la ruta según la ubicación de App.js desde tu archivo de componentes.
 
 // Ahora puedes usar maquinaSeleccionada en tu componente.
 class Row extends React.Component {
@@ -35,7 +34,7 @@ class SecondTable extends React.Component {
     }
 
     update() {
-        let maquina= maquinaSeleccionada;
+        let maquina = localStorage.getItem('maquinaseleccionada');
 
         fetch('http://35.245.67.156:4000/proceso/${maquina}', {
             method: 'GET',
