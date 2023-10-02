@@ -82,7 +82,7 @@ app.get('/hijo/:maquina', (req, res) => {
 app.use(express.json());
 
 // Endpoint para insertar un proceso
-app.post('/insertar_proceso', (req, res) => {
+app.post('/insertar_proceso/:maquina', (req, res) => {
   const maquina = req.params.maquina;
 
   const { estado, pid, name, user, ram } = req.body;

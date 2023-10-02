@@ -275,7 +275,9 @@ func LeecProcedimientos(){
 		pid := strconv.Itoa(procesos.Procesos[i].Pid)
 		name := procesos.Procesos[i].Nombre 
 		user := getUser(procesos.Procesos[i].Usuario)
-		ram := strconv.Itoa(procesos.Procesos[i].Ram) 
+		ram := strconv.Itoa(procesos.Procesos[i].Ram)
+        fmt.Println(user) 
+        fmt.Println(procesos.Procesos[i]) 
         InsertarProceso(estado,pid,name,user,ram, "1")
 		
 		
