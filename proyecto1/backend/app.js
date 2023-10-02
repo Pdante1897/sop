@@ -45,13 +45,10 @@ app.get('/uso/:maquina', (req, res) => {
       connection.query("DELETE FROM uso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
         if (error) {
           console.error('Error al realizar la consulta:', error);
-          res.status(500).send('Error al realizar la consulta');
         } else {
-          res.send(results);
         }
       });
       res.send(results);
-
     }
   });
 });
