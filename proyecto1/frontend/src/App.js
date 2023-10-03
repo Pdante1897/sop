@@ -31,7 +31,7 @@ function App() {
 
         })
         .catch(error => console.log(error));
-    }, 1000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
   const opcionesMaquinas = [

@@ -150,8 +150,8 @@ func InsertarProceso(listado Procesos, maquina string, numero int) {
 		user := getUser(listado.Procesos[i].Usuario)
 		ram := strconv.Itoa(listado.Procesos[i].Ram)
         listadoSend = append(listadoSend, ProcessSend{Pid: pid, Nombre: name, Usuario: user, Estado: estado, Ram: ram})
-        fmt.Println(user)
-        fmt.Println(listadoSend[i])
+        //fmt.Println(user)
+        //fmt.Println(listadoSend[i])
     }
     procesosSend := ProcesosSend{Procesos: listadoSend}
     data := procesosSend
@@ -205,7 +205,10 @@ func InsertarUsos(maquina string, ram string, cpu string) {
 		"ram": ram,
 		"cpu": cpu,
 	}
-
+	var respuesta struct {
+        Message string                 `json:"message"`
+        Data    map[string]interface{} `json:"data"`
+    }
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		log.Fatal(err)
@@ -215,7 +218,23 @@ func InsertarUsos(maquina string, ram string, cpu string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	cuerpo, err := ioutil.ReadAll(resp.Body)
 	defer resp.Body.Close()
+	fmt.Println(string(cuerpo))
+
+	if err := json.Unmarshal([]byte(cuerpo), &respuesta); err != nil {
+        fmt.Println("Error al deserializar JSON:", err)
+	}
+
+	pid := respuesta.Data["pid"]
+    kill := respuesta.Data["kill"]
+
+	fmt.Println(pid)
+	fmt.Println(kill)
+
+	if kill == true {
+		fmt.Println("Se ha eliminado el proceso con pid: ", pid)
+	}
 
 	if resp.StatusCode == http.StatusOK {
 		fmt.Println("Uso insertado correctamente.")
@@ -257,7 +276,7 @@ func LeecProcedimientos(iteracion int){
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Println(string(Archivo))
+    //fmt.Println(string(Archivo))
 	cpu_info := CPU{}
     procesos := Procesos{}
     err = json.Unmarshal(Archivo, &procesos)
@@ -273,7 +292,7 @@ func LeecProcedimientos(iteracion int){
     num1 := strconv.FormatFloat(getCpuUsage(), 'f', 2, 64)
     memoria := strconv.Itoa(getMemory())
     fmt.Println(memoria)
-    fmt.Println(procesos)
+    //fmt.Println(procesos)
 
 	InsertarUsos("1", memoria, num1)
     InsertarProceso(procesos, "1", iteracion)
