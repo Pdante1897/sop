@@ -53,6 +53,15 @@ function App() {
 
     // Almacenar el valor de PID en el Local Storage
     localStorage.setItem('kill', true);
+
+    let maquina = localStorage.getItem('maquinaseleccionada');
+    let kill = true;
+    let pid = localStorage.getItem('pid');
+    if (pid == null) {
+      pid = 0;
+    }
+
+
     fetch(`http://35.245.67.156:4000/kill/${maquina}/${kill}/${pid}`)
         .then(response => response.json())
         .then(data => {
