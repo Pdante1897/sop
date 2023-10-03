@@ -13,7 +13,9 @@ function App() {
   let maquina = localStorage.getItem('maquinaseleccionada');
   let kill = localStorage.getItem('kill');
   let pid = localStorage.getItem('pid');
-  
+  if (pid == null) {
+    pid = 0;
+  }
   const [ram, setRam] = useState(0);
   const [cpu, setCpu] = useState(0);
   useEffect(() => {

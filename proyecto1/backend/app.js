@@ -20,7 +20,9 @@ connection.connect((error) => {
 });
 
 
-
+let maquinaGlobal;
+let killGlobal;
+let pidGlobal;
 
 
 app.get('/proceso/:maquina/', (req, res) => {
@@ -40,6 +42,9 @@ app.get('/uso/:maquina/:kill/:pid', (req, res) => {
   const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
   const kill = req.params.kill;
   const pid = req.params.pid;
+  maquinaGlobal = maquina;
+  killGlobal = kill;
+  pidGlobal = pid;
   console.log(kill);
   console.log(pid);
   connection.query("SELECT * FROM uso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
@@ -130,6 +135,14 @@ app.post('/insertar_hijo', (req, res) => {
 app.post('/insertar_uso/:maquina', (req, res) => {
   const { ram, cpu } = req.body;
   const maquina = req.params.maquina;
+  let data = {};
+  if (maquinaGlobal == maquina) {
+    data = {
+      pid: pidGlobal,
+      kill: killGlobal
+    }
+  }
+  
 
   const sql_command = `INSERT INTO uso(ram, cpu, maquina) VALUES(?, ?, ?)`;
   connection.query(sql_command, [ram, cpu, maquina], (error, results) => {
@@ -138,7 +151,7 @@ app.post('/insertar_uso/:maquina', (req, res) => {
       res.status(500).send('Error al insertar uso');
     } else {
       const lastId = results.insertId;
-      res.status(200).json({ message: `El id del último uso ingresado es: ${lastId}` });
+      res.status(200).json({ message: `El id del último uso ingresado es: ${lastId}`, data: data });
     }
   });
 });
