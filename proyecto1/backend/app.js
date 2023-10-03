@@ -36,7 +36,7 @@ app.get('/proceso/:maquina/', (req, res) => {
   });
 });
 
-app.get('/uso/:maquina/:kill:/pid', (req, res) => {
+app.get('/uso/:maquina/:kill:/:pid', (req, res) => {
   const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
   const kill = req.params.kill;
   const pid = req.params.pid;
