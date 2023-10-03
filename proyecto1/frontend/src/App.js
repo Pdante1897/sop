@@ -11,27 +11,21 @@ import { useState, useEffect } from 'react';
 
 function App() {
   let maquina = localStorage.getItem('maquinaseleccionada');
-  let kill = localStorage.getItem('kill');
-  let pid = localStorage.getItem('pid');
-  if (pid == null) {
-    pid = 0;
-  }
+
   const [ram, setRam] = useState(0);
   const [cpu, setCpu] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch(`http://35.245.67.156:4000/uso/${maquina}/${kill}/${pid}`)
+      fetch(`http://35.245.67.156:4000/uso/${maquina}`)
         .then(response => response.json())
         .then(data => {
           const ramValue = parseFloat(data[data.length - 1].ram);
           const cpuValue = parseFloat(data[data.length - 1].cpu);
           setRam(ramValue);
           setCpu(cpuValue);
-          localStorage.setItem('kill', false);
-
         })
         .catch(error => console.log(error));
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
   const opcionesMaquinas = [

@@ -38,7 +38,7 @@ app.get('/proceso/:maquina/', (req, res) => {
   });
 });
 
-app.get('/uso/:maquina/:kill/:pid', (req, res) => {
+app.get('/uso/:maquina', (req, res) => {
   const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
 
   connection.query("SELECT * FROM uso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
