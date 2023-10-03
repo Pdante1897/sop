@@ -27,8 +27,10 @@ let pidGlobal;
 
 app.get('/proceso/:maquina/', (req, res) => {
   const maquina = req.params.maquina; 
+  const maquina2 = req.params.maquina; 
+
   // Extrae el valor de la variable "maquina" de la URL
-  connection.query("select * from proceso where maquina = ? and proces = (select Max(proces) from proceso) order by id ", [maquina], (error, results) => {
+  connection.query("select * from proceso where maquina = ? and proces = (select Max(proces) from proceso where maquina = ?) order by id ", [maquina, maquina2], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
       res.status(500).send('Error al realizar la consulta');
