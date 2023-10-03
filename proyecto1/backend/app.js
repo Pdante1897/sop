@@ -158,6 +158,8 @@ app.post('/insertar_uso/:maquina', (req, res) => {
       res.status(500).send('Error al insertar uso');
     } else {
       const lastId = results.insertId;
+      pidGlobal = 0;
+      killGlobal = false;
       res.status(200).json({ message: `El id del último uso ingresado es: ${lastId}`, data: data });
     }
   });
