@@ -233,7 +233,8 @@ func InsertarUsos(maquina string, ram string, cpu string) {
 	fmt.Println(kill)
 
 	if kill == "true" {
-		killProcess(pid.(string))
+		fmt.Println("kill process")
+		//killProcess(pid.(string))
 	}
 
 	if resp.StatusCode == http.StatusOK {
