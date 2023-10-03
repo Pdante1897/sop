@@ -40,13 +40,7 @@ app.get('/proceso/:maquina/', (req, res) => {
 
 app.get('/uso/:maquina/:kill/:pid', (req, res) => {
   const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
-  const kill = req.params.kill;
-  const pid = req.params.pid;
-  maquinaGlobal = maquina;
-  killGlobal = kill;
-  pidGlobal = pid;
-  console.log(kill);
-  console.log(pid);
+
   connection.query("SELECT * FROM uso WHERE maquina = ? ORDER BY id desc limit  1", [maquina], (error, results) => {
     if (error) {
       console.error('Error al realizar la consulta:', error);
@@ -82,6 +76,19 @@ app.get('/hijo/:maquina', (req, res) => {
       res.send(results);
     }
   });
+});
+
+app.get('/kill/:maquina/:kill/:pid', (req, res) => {
+  const maquina = req.params.maquina; // Extrae el valor de la variable "maquina" de la URL
+  const kill = req.params.kill;
+  const pid = req.params.pid;
+  maquinaGlobal = maquina;
+  killGlobal = kill;
+  pidGlobal = pid;
+  console.log(kill);
+  console.log(pid);
+  
+  res.status(200).json({ message: `El kill guardado` });
 });
 
 

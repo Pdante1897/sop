@@ -53,7 +53,17 @@ function App() {
 
     // Almacenar el valor de PID en el Local Storage
     localStorage.setItem('kill', true);
-    
+    fetch(`http://35.245.67.156:4000/kill/${maquina}/${kill}/${pid}`)
+        .then(response => response.json())
+        .then(data => {
+          const ramValue = parseFloat(data[data.length - 1].ram);
+          const cpuValue = parseFloat(data[data.length - 1].cpu);
+          setRam(ramValue);
+          setCpu(cpuValue);
+          localStorage.setItem('kill', false);
+
+        })
+        .catch(error => console.log(error));
     // Limpiar el valor del input
   }
 
