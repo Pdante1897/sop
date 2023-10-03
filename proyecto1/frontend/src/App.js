@@ -11,18 +11,21 @@ import { useState, useEffect } from 'react';
 
 function App() {
   let maquina = localStorage.getItem('maquinaseleccionada');
-
+  let kill = localStorage.getItem('kill');
+  let pid = localStorage.getItem('pid');
   const [ram, setRam] = useState(0);
   const [cpu, setCpu] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch(`http://35.245.67.156:4000/uso/${maquina}`)
+      fetch(`http://35.245.67.156:4000/uso/${maquina}/${kill}/${pid}`)
         .then(response => response.json())
         .then(data => {
           const ramValue = parseFloat(data[data.length - 1].ram);
           const cpuValue = parseFloat(data[data.length - 1].cpu);
           setRam(ramValue);
           setCpu(cpuValue);
+          localStorage.setItem('kill', false);
+
         })
         .catch(error => console.log(error));
     }, 1000);
@@ -43,11 +46,11 @@ function App() {
   };
   
   
-  const handleKillClick = () => {
+  const handleKillClick = (e) => {
 
     // Almacenar el valor de PID en el Local Storage
     localStorage.setItem('kill', true);
-
+    
     // Limpiar el valor del input
   }
 
