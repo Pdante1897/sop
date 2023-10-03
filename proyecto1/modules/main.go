@@ -125,7 +125,7 @@ func getMemory() int  {
 }
 
 func getCpuUsage() float64 {
-	cmd := exec.Command("sh", "-c", `ps -eo pcpu | sort -k 1 -r | head -50`)
+	cmd := exec.Command("bash", "-c", `ps -eo pcpu | sort -k 1 -r | head -n 50`)
 	stdout, err := cmd.Output()
 	if err != nil {
 		fmt.Println("error al correr comando", err)
