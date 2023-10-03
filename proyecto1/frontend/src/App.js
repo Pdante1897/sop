@@ -11,7 +11,7 @@ import { useState, useEffect } from 'react';
 
 function App() {
   let maquina = localStorage.getItem('maquinaseleccionada');
-
+  console.log(maquina);
   const [ram, setRam] = useState(0);
   const [cpu, setCpu] = useState(0);
   useEffect(() => {
@@ -40,6 +40,8 @@ function App() {
   const handleSeleccionMaquina = (event) => {
     localStorage.setItem('maquinaseleccionada', event.target.value);
     setMaquinaSeleccionada(event.target.value);
+    localStorage.setItem('maquinaseleccionada', event.target.value);
+
     
   };
   
