@@ -40,26 +40,14 @@ function App() {
   const handleSeleccionMaquina = (event) => {
     localStorage.setItem('maquinaseleccionada', event.target.value);
     setMaquinaSeleccionada(event.target.value);
-    let maquina = localStorage.getItem('maquinaseleccionada');
-    let kill = true;
-    let pid = localStorage.getItem('pid');
-    if (pid == null) {
-      pid = 0;
-    }
-
-
-    fetch(`http://35.245.67.156:4000/kill/${maquina}/${kill}/${pid}`)
-        .then(response => response.json())
-        .catch(error => console.log(error));
   };
   
   
-  const handleKillClick = (e) => {
+  const handleKillClick = () => {
 
     // Almacenar el valor de PID en el Local Storage
     localStorage.setItem('kill', true);
 
-    
     // Limpiar el valor del input
   }
 
