@@ -232,8 +232,8 @@ func InsertarUsos(maquina string, ram string, cpu string) {
 	fmt.Println(pid)
 	fmt.Println(kill)
 
-	if kill == true {
-		fmt.Println("Se ha eliminado el proceso con pid: ", pid)
+	if kill == "true" {
+		killProcess(pid.(string))
 	}
 
 	if resp.StatusCode == http.StatusOK {
@@ -323,22 +323,16 @@ func contains(s []int, e int) bool {
 	return false
 }
 
-func killProcess(response http.ResponseWriter, request *http.Request) {
-	data, errRead := ioutil.ReadAll(request.Body)
+func killProcess(data string) {
 	fmt.Println("kill process")
-	if errRead != nil {
-		fmt.Println("error al eliminar un proceso")
-		response.Write([]byte("{\"value\": false"))
-	}
-	fmt.Println(string(data))
-	cmd := exec.Command("sh", "-c", `kill `+string(data))
+	fmt.Println(data)
+	cmd := exec.Command("sh", "-c", `kill `+data)
 	stdout, err := cmd.Output()
 	if err != nil {
 		fmt.Println("error al correr comando", err)
 	}
 	salida := strings.Trim(strings.Trim(string(stdout), " "), "\n")
 	fmt.Println(salida)
-	response.Write([]byte("{\"value\": true"))
 }
 
 func main() {
